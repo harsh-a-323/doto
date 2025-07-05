@@ -33,9 +33,10 @@ declare module "next-auth/jwt" {
 
 
 
-
-// console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID ? "✓ Loaded" : "✗ Missing");
-// console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "✓ Loaded" : "✗ Missing");
+// 
+console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID ? "✓ Loaded" : "✗ Missing");
+console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "✓ Loaded" : "✗ Missing");
+console.log("DB:", process.env.DATABASE_URL ? "✓ Loaded" : "✗ Missing");
 
 export const authOptions: NextAuthOptions = {
   providers: [
