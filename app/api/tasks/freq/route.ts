@@ -1,6 +1,5 @@
-import prisma from "@/lib/prisma"; 
+import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
-
 
 export async function GET(request: NextRequest) {
     try {
@@ -8,13 +7,13 @@ export async function GET(request: NextRequest) {
         const dateParam = searchParams.get('date');
         const userId = searchParams.get('id');
 
-        if (!dateParam ) {
+        if (!dateParam) {
             return NextResponse.json(
                 { error: "Date parameter is required" },
                 { status: 400 }
             );
         }
-        if (!userId ) {
+        if (!userId) {
             return NextResponse.json(
                 { error: "user Id parameter is required" },
                 { status: 400 }
@@ -44,7 +43,7 @@ export async function GET(request: NextRequest) {
         // Get all completed tasks for the week
         const weeklyLogs = await prisma.taskslogs.findMany({
             where: {
-                userId : Number(userId),
+                userId: Number(userId),
                 update_time: {
                     gte: weekStart,
                     lte: weekEnd
@@ -59,7 +58,7 @@ export async function GET(request: NextRequest) {
         });
 
         // Group by task and count unique days
-        const taskFrequency = weeklyLogs.reduce((acc: Record<number, Set<string>>, log) => {
+        const taskFrequency = weeklyLogs.reduce((acc: Record<number, Set<string>>, log: { taskId: number; update_time: Date; curr_status: boolean }) => {
             const taskId = log.taskId;
             const logDate = log.update_time.toDateString(); // Get just the date part
             
@@ -71,7 +70,7 @@ export async function GET(request: NextRequest) {
             return acc;
         }, {} as Record<number, Set<string>>);
 
-        // Convert to frequency count (no BigInt here, but being consistent)
+        // Convert to frequency count
         const freq = Object.entries(taskFrequency).map(([taskId, dateSet]) => ({
             taskId: parseInt(taskId),
             frequency: dateSet.size
