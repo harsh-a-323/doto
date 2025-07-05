@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
         });
 
         // Group by task and count unique days
-        const taskFrequency = weeklyLogs.reduce((acc, log) => {
+        const taskFrequency = weeklyLogs.reduce((acc: Record<number, Set<string>>, log) => {
             const taskId = log.taskId;
             const logDate = log.update_time.toDateString(); // Get just the date part
             
