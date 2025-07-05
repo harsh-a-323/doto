@@ -1,7 +1,5 @@
-import { PrismaClient } from "@/db/src/generated/prisma";
+import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
-
-const client = new PrismaClient();
 
 export async function GET(request: NextRequest){
     try{
@@ -21,7 +19,7 @@ export async function GET(request: NextRequest){
             );
         }
 
-        const tasks = await client.tasks.findMany({where : {
+        const tasks = await prisma.tasks.findMany({where : {
             userId :  Number(userId),
             creation_time : {
                 lte : new Date(dateParam) 
@@ -41,6 +39,6 @@ export async function GET(request: NextRequest){
             { status: 500 }
         );
     }finally{
-        client.$disconnect();
+        prisma.$disconnect();
     }
 }

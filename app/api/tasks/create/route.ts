@@ -1,7 +1,6 @@
-import { PrismaClient } from "@/db/src/generated/prisma";
+import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-const client = new PrismaClient();
 
 export async function POST(request: NextRequest){
     const body = await request.json();
@@ -13,7 +12,7 @@ export async function POST(request: NextRequest){
     }
     else {
         try{
-            const resp = await client.tasks.create({data : {
+            const resp = await prisma.tasks.create({data : {
                 title :  body.title,
                 min_freq_per_week :  body.min_freq_per_week > 7 ? 7 : body.min_freq_per_week,
                 creation_time : body.creation_time || new Date(),

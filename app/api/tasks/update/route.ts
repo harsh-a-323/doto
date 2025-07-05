@@ -1,7 +1,6 @@
-import { PrismaClient } from "@/db/src/generated/prisma";
+import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-const client = new PrismaClient();
 
 export async function POST(request: NextRequest){
     try {
@@ -33,7 +32,7 @@ export async function POST(request: NextRequest){
         });
 
         // Delete previous logs for the same task on the same day
-        const deletePrevLogs = await client.taskslogs.deleteMany({
+        const deletePrevLogs = await prisma.taskslogs.deleteMany({
             where: {
                 taskId: body.taskId,
                 update_time: {
@@ -46,7 +45,7 @@ export async function POST(request: NextRequest){
         console.log(`Deleted ${deletePrevLogs.count} previous logs`);
 
         // Create new log entry
-        const log = await client.taskslogs.create({
+        const log = await prisma.taskslogs.create({
             data: {
                 userId : Number(body.userId),
                 taskId: body.taskId,

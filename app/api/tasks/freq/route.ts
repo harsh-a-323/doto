@@ -1,7 +1,6 @@
-import { PrismaClient } from "@/db/src/generated/prisma";
+import prisma from "@/lib/prisma"; 
 import { NextRequest, NextResponse } from "next/server";
 
-const client = new PrismaClient();
 
 export async function GET(request: NextRequest) {
     try {
@@ -43,7 +42,7 @@ export async function GET(request: NextRequest) {
         weekEnd.setHours(23, 59, 59, 999);
 
         // Get all completed tasks for the week
-        const weeklyLogs = await client.taskslogs.findMany({
+        const weeklyLogs = await prisma.taskslogs.findMany({
             where: {
                 userId : Number(userId),
                 update_time: {

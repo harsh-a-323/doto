@@ -1,8 +1,11 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaClient } from "@/db/src/generated/prisma";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt';
+import prisma from "@/lib/prisma";
+
+
+
 // Extend NextAuth types
 declare module "next-auth" {
   interface User {
@@ -27,7 +30,8 @@ declare module "next-auth/jwt" {
   }
 }
 
-const client = new PrismaClient();
+
+
 
 // console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID ? "✓ Loaded" : "✗ Missing");
 // console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "✓ Loaded" : "✗ Missing");
@@ -46,7 +50,7 @@ export const authOptions: NextAuthOptions = {
       },
        async authorize(credentials, req) {
 
-      const existingUser = await client.users.findUnique({
+      const existingUser = await prisma.users.findUnique({
           where: { email: credentials?.email! },
           select: { id: true,
             name: true,
@@ -69,7 +73,7 @@ export const authOptions: NextAuthOptions = {
           
         }
          const hashedPassword = await bcrypt.hash(credentials?.password!,10);
-        const newUser = await client.users.create({
+        const newUser = await prisma.users.create({
           data: {
             name: "Unknown",
             email: credentials?.email!,
@@ -98,7 +102,7 @@ export const authOptions: NextAuthOptions = {
       console.log('Sign in:', { user, account, profile })
       try {
         // Check if user already exists
-        const existingUser = await client.users.findUnique({
+        const existingUser = await prisma.users.findUnique({
           where: { email: user.email! },
           select: { id: true }
         });
@@ -110,7 +114,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         // Create new user if doesn't exist
-        const newUser = await client.users.create({
+        const newUser = await prisma.users.create({
           data: {
             name: user.name || "Unknown",
             email: user.email!,
