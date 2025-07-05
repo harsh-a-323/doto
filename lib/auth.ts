@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import prisma from "@/lib/prisma";
 
 
+console.log(prisma);
 
 // Extend NextAuth types
 declare module "next-auth" {
@@ -45,12 +46,12 @@ export const authOptions: NextAuthOptions = {
     Credentials({
       name: 'Credentials',
       credentials : {
-        email: { label: "Email", type: "text", placeholder: "jsmith@example.com" },
-        password: { label: "Password", type: "password" }
+        email: { label: "Email", type: "text", placeholder: "jsmith@example.com",required : true },
+        password: { label: "Password", type: "password", required: true }
       },
-       async authorize(credentials, req) {
-
-      const existingUser = await prisma.users.findUnique({
+      async authorize(credentials, req) {
+      try {
+        const existingUser = await prisma.users.findUnique({
           where: { email: credentials?.email! },
           select: { id: true,
             name: true,
@@ -94,6 +95,12 @@ export const authOptions: NextAuthOptions = {
           email: newUser.email,
           image: newUser.imagelink,
         };
+      }
+      catch(e){
+        console.log(e);
+        return null;
+    }
+
     }
     })
   ],
