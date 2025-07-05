@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db-ready": "cd db && tsc -b && npx prisma migrate dev --name new && npx prisma generate && node dist/seed.js"
+    "db-ready": "cd d && npx prisma generate"
   },
   "dependencies": {
     "axios": "^1.9.0",
