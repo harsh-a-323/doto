@@ -99,7 +99,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log('Sign in:', { user, account, profile })
+      // console.log('Sign in:', { user, account, profile })
       try {
         // Check if user already exists
         const existingUser = await prisma.users.findUnique({
