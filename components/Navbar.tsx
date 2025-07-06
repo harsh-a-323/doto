@@ -4,7 +4,7 @@ export default function Navbar({setTaskoverlay} : { setTaskoverlay: (displayOver
   const session = useSession();
 //   console.log("sess : ",session);
     return (
-        <div className="min-w-full border-b border-gray-300 flex h-16 justify-between items-center px-10">
+        <div className="min-w-full border-b border-gray-300 flex h-16 justify-between gap-3 items-center px-10">
             <div className="text-4xl font-light text-gray-600 hover:scale-102 transition delay-100 duration-200 ease-in-out">
                 DoTo
             </div>
