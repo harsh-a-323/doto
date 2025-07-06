@@ -48,7 +48,7 @@ export default function Task({curr_date , AddTaskOverlay}:{curr_date : Date , Ad
     
     return (
         <div className="space-y-6">
-            <div className="flex justify-between px-4">
+            <div className="flex justify-between px-4 gap-10">
                 <div>
                     {   
                         curr_date.toLocaleDateString('en-US', { 

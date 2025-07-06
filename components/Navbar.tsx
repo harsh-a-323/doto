@@ -9,19 +9,19 @@ export default function Navbar({setTaskoverlay} : { setTaskoverlay: (displayOver
                 DoTo
             </div>
             <div className="flex gap-5 lg:gap-10">
-                <button className="rounded-lg flex gap-3 bg-white p-2 hover:scale-105 transition delay-50 duration-200 ease-in-out hover:text-blue-600"
+                <button className="rounded-lg flex gap-1 text-sm sm:text-base bg-white p-1 hover:scale-105 transition items-center delay-50 duration-200 ease-in-out hover:text-blue-600"
                 onClick={()=>{setTaskoverlay(true)}}>
-                    <AddSVG className="size-10"/>
+                    <AddSVG className="size-4 sm:size-6"/>
                     Add new Task
                 </button>
-                {(session.status == "authenticated") ?  <button className="rounded-lg flex gap-3 bg-white p-2 hover:scale-105 transition delay-100 duration-200 ease-in-out hover:text-red-600"
+                {(session.status == "authenticated") ?  <button className="rounded-lg flex gap-3 bg-white p-2 hover:scale-105 items-center transition delay-100 duration-200 ease-in-out hover:text-red-600"
                 onClick={()=>{
                     signOut();
                 }}
                 >
                     Logout
                 </button> :
-                <button className="rounded-lg flex gap-3 bg-white p-2 hover:scale-105 transition delay-100 duration-200 ease-in-out hover:text-red-600"
+                <button className="rounded-lg flex gap-3 bg-white p-2 text-sm sm:text-base hover:scale-105 transition delay-100 duration-200 ease-in-out hover:text-red-600"
                 onClick={()=>{
                     signIn();
                 }}
@@ -36,7 +36,7 @@ export default function Navbar({setTaskoverlay} : { setTaskoverlay: (displayOver
 
 function AddSVG({ className }:{className : string}){
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`${className}`}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
 
