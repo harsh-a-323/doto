@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import prisma from "@/lib/prisma";
 
 
-console.log(prisma);
+// console.log(prisma);
 
 // Extend NextAuth types
 declare module "next-auth" {

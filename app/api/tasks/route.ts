@@ -6,8 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 type EnrichedTask = {
     id: number;
     title: string;
-    description?: string | null;
-    min_freq_per_week?: number | null;
+    min_freq_per_week: number | 0;
     status: boolean;
     curr_freq: number;
 };
@@ -94,10 +93,12 @@ export async function GET(request: NextRequest) {
         // 5. Combine data into a single response
         const enrichedTasks: EnrichedTask[] = baseTasks.map(task => ({
             ...task,
-            min_freq_per_week: task.min_freq_per_week,
+            min_freq_per_week: task.min_freq_per_week || 0,
             status: statusMap.get(task.id) || false,
             curr_freq: frequencyMap.get(task.id)?.size || 0
         }));
+
+        console.log(enrichedTasks);
 
         return NextResponse.json({
             success: true,

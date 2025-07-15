@@ -7,8 +7,7 @@ import { useSession } from "next-auth/react";
 export interface Task {
     id: number;
     title: string;
-    description?: string | null;
-    min_freq_per_week?: number | null;
+    min_freq_per_week: number | 0;
     status: boolean;
     curr_freq: number;
 }
